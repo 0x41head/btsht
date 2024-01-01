@@ -140,7 +140,7 @@ const onButtonPress = (password) => {
 
 The most critical part of this application lies here.
 
-I had to somehow let my server know that I was, in fact, dead. This is where me being terminally online comes into play. Considering my online activity, if I haven't checked my email or the app despite all the notifications, it's highly likely that I'm either dead or stranded on a remote island with no network, which considering my physical attributes also means I am dead. 
+I had to somehow let my server know that I was, in fact, dead. This is where me being terminally online comes into play. Considering my online activity, if I haven't checked my email or the app despite all the notifications, it's highly likely that I'm either dead or stranded on a remote island with no network, which considering my physical attributes also means I am dead
 
 A scheduled task, executed every day at 00:00, retrieves my last activity status from the database and calculates the elapsed time. If I haven't pressed the app button in the last seven days, it shoots an email to me, with a cURL command (the same one the app uses). This precautionary step is in case I lose my phone or if I can no longer get the app to work.
 
