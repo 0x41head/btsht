@@ -28,7 +28,7 @@ This project can be divided into two steps:
 The latter isn’t that difficult. What I want to focus on is the former.
 
 Below, you'll find a system architecture diagram elucidating how this entire system functions:
-![Alt text](https://raw.githubusercontent.com/0x41head/btsht/main/src/posts/2024/1/images/sys-arch.png "something like this ?")
+![System Arch](https://raw.githubusercontent.com/0x41head/btsht/main/src/posts/2024/1/images/sys-arch.png)
 
 Simply put, I'm required to press a button on my app daily to update my database
 
@@ -120,9 +120,21 @@ export default App;
 
 ```
 
+![App SS](https://raw.githubusercontent.com/0x41head/btsht/main/src/posts/2024/1/images/ss.jpg)
+
 I also added a local notification that gets sent to my app, 24 hours after my last button press.
 
-(See code snippet.)
+```js
+const onButtonPress = (password) => {
+  updateDB(password);
+  if (Platform.OS !== 'web') {
+    //Cancel existing scheduled notifications
+    Notifications.cancelAllScheduledNotificationsAsync();
+    //Schedule new notification that triggers 24 hours from now 
+    schedulePushNotification();
+  }
+};
+```
 
 ## Server
 
@@ -131,6 +143,34 @@ The most critical part of this application lies here.
 I had to somehow let my server know that I was, in fact, dead. This is where me being terminally online comes into play. Considering my online activity, if I haven't checked my email or the app despite all the notifications, it's highly likely that I'm either dead or stranded on a remote island with no network, which considering my physical attributes also means I am dead. 
 
 A scheduled task, executed every day at 00:00, retrieves my last activity status from the database and calculates the elapsed time. If I haven't pressed the app button in the last seven days, it shoots an email to me, with a cURL command (the same one the app uses). This precautionary step is in case I lose my phone or if I can no longer get the app to work.
+
+```js
+cron.schedule('0 0 * * *', async () => {
+    if(dead){
+        // Closes the serverwhen I die
+        process.exit()
+    }
+    console.log('Running a task every day!');
+    const whenWasTheDBLastUpdated = await redisClient.get('last update');
+    const dbDateCovertedToDateObject= new Date(whenWasTheDBLastUpdated).getTime()
+    const currentDateTime = new Date().getTime();
+    
+    //Conversion from milliseconds to days
+    const numberOfDaysFromLastResponse = ((currentDateTime-dbDateCovertedToDateObject)/86400000).toFixed(0)
+
+    // DId I really die or I am stuck on a place with no internet. Probably the former
+    if(numberOfDaysFromLastResponse>30){
+        // Webhooks to deploy if I die 
+        sendEmail(process.env.PRIMARY_MAIL,"I am dead","delete my browser history");
+        dead=true;
+    }
+
+    if(numberOfDaysFromLastResponse>7){
+        const emailBody="If yes, use this: \n "+ process.env.COMMAND_TO_CURL
+        sendEmail(process.env.PRIMARY_MAIL,"Are You Alive?",emailBody);
+    }
+});
+```
 
 ## Containerization + hosting
 
