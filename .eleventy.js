@@ -1,7 +1,7 @@
 const syntaxHighlight = require('@11ty/eleventy-plugin-syntaxhighlight')
 const markdownIt = require('markdown-it')
 const markdownItAnchor = require('markdown-it-anchor')
-const { DateTime } = require("luxon")
+const { DateTime } = require('luxon')
 
 module.exports = function(eleventyConfig) {
   // Plugins
@@ -30,8 +30,8 @@ module.exports = function(eleventyConfig) {
   })
 
   // filter to format post date to year-month-day
-  eleventyConfig.addFilter("postDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj).toFormat('yyyy-MM-dd');
+  eleventyConfig.addFilter('postDate', (dateObj) => {
+    return DateTime.fromJSDate(dateObj).toFormat('yyyy-MM-dd')
   })
 
   // Enable us to iterate over all the tags, excluding posts and all
@@ -59,7 +59,7 @@ module.exports = function(eleventyConfig) {
   // creates a shortcode that allows inserting images with alt-texts. Usage {% asset_img 'imagename','alt-text' %}
   // you can pass an optional third argument to give the image a custom path. defaults to /assets/img/posts/
   eleventyConfig.addShortcode('asset_img', (filename, alt, path = '/assets/img/posts/') => 
-  `<img class="my-4" src="${path}${filename}" alt="${alt}" />`
+    `<img class="my-4" src="${path}${filename}" alt="${alt}" />`
   )
 
   return {
@@ -67,17 +67,17 @@ module.exports = function(eleventyConfig) {
       input: 'src',
       output: '_site'
     },
-		templateFormats: [
-			"md",
-			"njk",
-			"html",
-			"liquid",
-		],
+    templateFormats: [
+      'md',
+      'njk',
+      'html',
+      'liquid',
+    ],
 
-		// Pre-process *.md files with: (default: `liquid`)
-		markdownTemplateEngine: "njk",
+    // Pre-process *.md files with: (default: `liquid`)
+    markdownTemplateEngine: 'njk',
 
-		// Pre-process *.html files with: (default: `liquid`)
-		htmlTemplateEngine: "njk"
+    // Pre-process *.html files with: (default: `liquid`)
+    htmlTemplateEngine: 'njk'
   }
 }
