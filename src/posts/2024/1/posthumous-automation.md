@@ -207,4 +207,4 @@ You can find the entire code [here](https://github.com/0x41head/posthumous-autom
 
 ___
 # EDIT (2026-01-15)
-Someone in China ended up making something very [similar] (https://www.bbc.com/news/articles/c3381r5nnn6o)
+Someone in China ended up making something very [similar](https://www.bbc.com/news/articles/c3381r5nnn6o)
