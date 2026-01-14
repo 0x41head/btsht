@@ -204,3 +204,7 @@ This was a fun project I made over the course of a week. I had a bunch of other 
 - Putting a nanochip in my heart to check when it stops pumping blood.
 
 You can find the entire code [here](https://github.com/0x41head/posthumous-automation)
+
+___
+# EDIT (2026-01-15)
+Someone in China ended up making something very [similar] (https://www.bbc.com/news/articles/c3381r5nnn6o)
